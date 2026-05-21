@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: url("https://images.unsplash.com/photo-1503376780353-7e6692767b70") no-repeat center center/cover;
+}
+
+/* Dark overlay */
+body::before{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.6);
+    z-index:0;
+}
+
+/* Glass container */
+.container{
+    position:relative;
+    z-index:1;
+    width:350px;
+    padding:40px;
+    border-radius:20px;
+    backdrop-filter: blur(12px);
+    background: rgba(255,255,255,0.1);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    text-align:center;
+}
+
+/* Title */
+.container h2{
+    color:white;
+    margin-bottom:20px;
+}
+
+/* Inputs */
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:none;
+    border-radius:10px;
+    outline:none;
+}
+
+/* Button */
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#00c6ff;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#0072ff;
+}
+
+/* Register link */
+a{
+    display:block;
+    margin-top:15px;
+    color:#ddd;
+    text-decoration:none;
+}
+
+a:hover{
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <form method="POST">
+        <h2>🚗 Parking Login</h2>
+
+        <input name="username" placeholder="Username" required>
+        <input name="password" type="password" placeholder="Password" required>
+
+        <button type="submit">Login</button>
+
+        <a href="/register">Create Account</a>
+    </form>
+</div>
+
+</body>
+</html>

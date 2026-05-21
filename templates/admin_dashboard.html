@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="mb-4 fw-bold text-info">
+🚀 AI Admin Dashboard
+</h1>
+
+<div class="row g-4 mb-4">
+
+<div class="col-md-3">
+<div class="card stat-card">
+<h5>Total Bookings</h5>
+<h2>{{ total }}</h2>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card stat-card">
+<h5>Occupied</h5>
+<h2>{{ occupied }}</h2>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card stat-card">
+<h5>Available</h5>
+<h2>{{ available }}</h2>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card stat-card">
+<h5>Revenue</h5>
+<h2>₹{{ revenue }}</h2>
+</div>
+</div>
+
+</div>
+
+<div class="card p-4 mb-4">
+<h3 class="text-warning">🔥 Peak Hour</h3>
+<h1>{{ peak }}:00 - {{ peak+1 }}:00</h1>
+</div>
+
+<div class="row">
+
+<div class="col-lg-6 mb-4">
+<div class="card chart-box">
+<h4>📊 Slot Usage</h4>
+<canvas id="slotChart"></canvas>
+</div>
+</div>
+
+<div class="col-lg-6 mb-4">
+<div class="card chart-box">
+<h4>📈 Daily Trend</h4>
+<canvas id="trendChart"></canvas>
+</div>
+</div>
+
+</div>
+
+<div class="card chart-box mb-4">
+<h4>🤖 AI Demand Prediction</h4>
+<canvas id="aiChart"></canvas>
+</div>
+
+<div class="card p-4 mb-4">
+
+<h4 class="mb-3">🔍 Search Vehicle</h4>
+
+<form method="POST">
+
+<div class="input-group">
+
+<input name="search"
+class="form-control"
+placeholder="Enter Vehicle Number">
+
+<button class="btn btn-primary">
+Search
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+{% if search %}
+<div class="card p-4 mb-4">
+
+<table class="table table-borderless align-middle">
+
+<tr>
+<th>Vehicle</th>
+<th>Slot</th>
+</tr>
+
+{% for s in search %}
+<tr>
+<td>{{ s.vehicle_number }}</td>
+<td>{{ s.slot_number }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+</div>
+{% endif %}
+
+<div class="card p-4">
+
+<h4 class="mb-4">📋 All Bookings</h4>
+
+<div class="table-responsive">
+
+<table class="table align-middle">
+
+<tr>
+<th>Vehicle</th>
+<th>Mobile</th>
+<th>Slot</th>
+<th>Action</th>
+</tr>
+
+{% for b in bookings %}
+
+<tr>
+
+<td>{{ b.vehicle_number }}</td>
+<td>{{ b.mobile }}</td>
+<td>{{ b.slot_number }}</td>
+
+<td>
+<a href="/delete/{{ b.id }}"
+class="btn btn-danger btn-sm">
+Delete
+</a>
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+Chart.defaults.color = "white";
+
+new Chart(document.getElementById('slotChart'), {
+
+type: 'doughnut',
+
+data: {
+labels: ['Occupied', 'Available'],
+datasets: [{
+data: [{{ occupied }}, {{ available }}],
+borderWidth:2
+}]
+}
+
+});
+
+new Chart(document.getElementById('trendChart'), {
+
+type: 'line',
+
+data: {
+labels: {{ labels|tojson }},
+datasets: [{
+label: 'Bookings',
+data: {{ values|tojson }},
+tension:0.4,
+fill:true
+}]
+}
+
+});
+
+new Chart(document.getElementById('aiChart'), {
+
+type: 'bar',
+
+data: {
+labels: [...Array(24).keys()],
+datasets: [{
+label: 'Predicted Demand',
+data: {{ predictions|tojson }},
+borderWidth:1
+}]
+}
+
+});
+
+</script>
+
+{% endblock %}  

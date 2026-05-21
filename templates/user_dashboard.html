@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>User Dashboard</h3>
+<a href="/book" class="btn btn-primary mb-3">Book</a>
+
+<table class="table">
+<tr>
+<th>Vehicle</th><th>Slot</th><th>Start</th><th>End</th><th>QR</th><th>Exit</th>
+</tr>
+
+{% for b in bookings %}
+<tr>
+<td>{{ b.vehicle_number }}</td>
+<td>{{ b.slot_number }}</td>
+<td>{{ b.entry_time }}</td>
+<td>{{ b.duration }}</td>
+<td><img src="/static/{{ b.vehicle_number }}.png" width="80"></td>
+<td><a href="/exit/{{ b.id }}" class="btn btn-danger">Exit</a></td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}

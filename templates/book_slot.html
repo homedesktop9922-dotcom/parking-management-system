@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row justify-content-center">
+
+<div class="col-lg-7">
+
+<div class="card p-5">
+
+<h2 class="mb-4 text-center text-info">
+🚗 Book Smart Parking Slot
+</h2>
+
+<form method="POST" action="/book">
+
+<input
+name="vehicle"
+placeholder="Vehicle Number"
+class="form-control mb-3"
+required>
+
+<input
+name="mobile"
+placeholder="Mobile Number"
+class="form-control mb-3"
+required>
+
+<label class="mb-2">Start Time</label>
+
+<input
+type="datetime-local"
+name="start"
+id="start"
+class="form-control mb-3"
+required>
+
+<label class="mb-2">End Time</label>
+
+<input
+type="datetime-local"
+name="end"
+id="end"
+class="form-control mb-3"
+required>
+
+<label class="mb-2">Select Slot</label>
+
+<select
+name="slot"
+class="form-control mb-4">
+
+{% for s in slots %}
+
+<option value="{{ s.slot_number }}">
+Slot {{ s.slot_number }}
+</option>
+
+{% endfor %}
+
+</select>
+
+<button
+type="submit"
+class="btn btn-success w-100">
+
+💳 Continue to Payment
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function formatDate(date) {
+    return date.toISOString().slice(0,16);
+}
+
+let now = new Date();
+
+let end = new Date();
+
+end.setHours(end.getHours() + 1);
+
+document.getElementById("start").value = formatDate(now);
+
+document.getElementById("end").value = formatDate(end);
+
+</script>
+
+{% endblock %}
