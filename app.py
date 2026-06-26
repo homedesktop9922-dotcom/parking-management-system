@@ -26,9 +26,12 @@ twilio_client = Client(
 
 # ---------------- RAZORPAY ----------------
 
+RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
+RAZORPAY_SECRET = os.getenv("RAZORPAY_SECRET")
+
 client = razorpay.Client(auth=(
-    "rzp_test_SkwzMKt4mOE88d",
-    "CInqh9Z4RYQWemHfCQQ37PWj"
+    RAZORPAY_KEY_ID,
+    RAZORPAY_SECRET
 ))
 
 
@@ -185,8 +188,9 @@ def book():
 
         return render_template(
             "payment.html",
-            order_id=order["id"],
-            amount=price
+             order_id=order["id"],
+             amount=price,
+             razorpay_key=RAZORPAY_KEY_ID
         )
 
     return render_template(
